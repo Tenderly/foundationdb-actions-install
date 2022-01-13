@@ -15,18 +15,18 @@ try {
     switch (os.platform()) {
         case 'linux': {
             let client_url = `${base_url}/foundationdb-clients_${version}-1_amd64.deb`;
-            exec(`curl -O ${client_url}`);
+            exec(`curl -k -SLO ${client_url}`);
             exec(`sudo dpkg -i foundationdb-clients_${version}-1_amd64.deb`);
 
             let server_url = `${base_url}/foundationdb-server_${version}-1_amd64.deb`;
-            exec(`curl -O ${server_url}`);
+            exec(`curl -k -SLO ${server_url}`);
             exec(`sudo dpkg -i foundationdb-server_${version}-1_amd64.deb`);
             break;
         }
         case 'win32': {
             const cfg_path = "C:\\ProgramData\\foundationdb\\foundationdb.conf";
             let url = `${base_url}/foundationdb-${version}-x64.msi`;
-            exec(`curl -O ${url}`);
+            exec(`curl -k -SLO ${url}`);
             exec(`msiexec /i "foundationdb-${version}-x64.msi" /quiet /passive /norestart /log install.log`);
             exec(`net stop fdbmonitor`);
             mkdirSync("D:\\fdblogs");
@@ -42,7 +42,7 @@ try {
         }
         case 'darwin': {
             let url = `${base_url}/FoundationDB-${version}.pkg`;
-            exec(`curl -O ${url}`);
+            exec(`curl -k -SLO ${url}`);
             exec(`sudo installer -pkg FoundationDB-${version}.pkg -target /`);
             break;
         }
